@@ -3,6 +3,7 @@
  * @description: User modal implementation
  */
 
+import { Exclude } from 'class-transformer';
 import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({

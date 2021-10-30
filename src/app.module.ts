@@ -8,9 +8,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { PostTypeModule } from './post-type/post-type.module';
 
 @Module({
-  imports: [ UserModule,DatabaseModule],
+  imports: [ UserModule,DatabaseModule, PostTypeModule],
   controllers: [AppController],
   providers: [AppService],
 })
