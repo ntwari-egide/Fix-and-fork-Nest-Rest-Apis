@@ -1,3 +1,9 @@
+/**
+ * @author: ntwari egide
+ * @description: Post type controller implementation
+ */
+
+
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PostTypeService } from './post-type.service';
 import { CreatePostTypeDto } from './dto/create-post-type.dto';
