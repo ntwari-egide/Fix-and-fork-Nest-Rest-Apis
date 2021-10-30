@@ -12,21 +12,24 @@ import { User } from './user.interface';
 @Injectable()
 export class UserService {
 
-  constructor(
+  constructor(  
     @Inject('USER_MODEL')
     private userModal: Model<User>
   ){}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto): Promise<User> {
+
+    let createUser = new this.userModal(createUserDto)
+
+    return createUser.save()
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    return this.userModal.find().exec()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<User> {
+    return null
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
