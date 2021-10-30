@@ -1,14 +1,12 @@
 /**
  * @author: ntwari egide
- * @description: Post schema implementation
+ * @description: Post interface implementation
  */
 
 
- import * as mongoose from 'mongoose';
+ import { Document } from 'mongoose';
 
- export const PostSchema = new mongoose.Schema({
-
-    id: String,
+ export interface Post extends Document {
 
     postTypes : [String] ,
 
@@ -33,6 +31,5 @@
     createdAt: Date,
 
     updatedAt: Date
-
-
- })
+    
+ }
