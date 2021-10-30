@@ -6,7 +6,7 @@
 import { Connection } from "mongoose";
 import { UserSchema } from "./entities/user.entity";
 
- export const catsProviders = [
+ export const usersProvider = [
     {
       provide: 'USER_MODEL',
       useFactory: (connection: Connection) => connection.model('User', UserSchema),
