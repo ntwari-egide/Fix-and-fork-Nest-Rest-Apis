@@ -7,17 +7,20 @@ import { ApiProperty } from "@nestjs/swagger"
 
 export class CreateCommentReplyDto {
 
+    
     @ApiProperty({
         description: "Comment Ids",
         type: String
     })
     commentId: String
 
+
     @ApiProperty({
         description: "Comment reply message content",
         type: String
     })
     replyMessage: String
+
 
     @ApiProperty({
         description: "Replied at",
