@@ -19,6 +19,9 @@ async function bootstrap() {
     .setTitle('Fix and fork apis documentation')
     .setDescription('Platform of posting solutions of coding bugs and how to fix them, powering open source development')
     .setVersion('1.0')
+    .addTag('Users')
+    .addTag('Post-Types')
+    .addTag('Posts')
     .build()
 
 

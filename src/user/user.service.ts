@@ -79,6 +79,8 @@ export class UserService {
     
     this.checkUserExistance(id)
 
+    this.logger.log('Deleting user with id : '+id)
+
     return this.userModal.findByIdAndRemove(id).exec()
 
   }

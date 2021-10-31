@@ -1,26 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { PostNotFoundException } from 'src/exceptions/PostNotFoundException';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Post } from './posts.interface';
 
 @Injectable()
 export class PostsService {
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+
+  constructor(  
+    @Inject('POST_MODEL')
+    private postModel: Model<Post>
+  ){}
+
+  private readonly logger = new Logger(PostsService.name)
+
+  async create(createPostDto: CreatePostDto): Promise<Post> {
+
+    let createPost = new this.postModel(createPostDto)
+
+    this.logger.log('Saving new post in the database...')
+
+    return createPost.save();
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(): Promise<Post[]> {
+
+    this.logger.log('Getting list of all posts')
+
+    return this.postModel.find().exec()
+  
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  checkPostExistance = (id: String) : Post => {
+    let post : any
+    try {
+      post = this.postModel.findById(id).exec()
+
+      this.logger.log('Getting post with id : '+id)
+      
+    } catch (error) {
+
+      this.logger.log('Getting Post with id: '+id+" has failed")
+
+      throw new PostNotFoundException('Post with id '+id+ ' is not found')
+
+    }
+
+    return post
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+
+  async findOne(id: String): Promise<Post> {
+    return this.checkPostExistance(id)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async update(id: String, updatePostDto: UpdatePostDto): Promise<Post> {
+
+    this.checkPostExistance(id)
+
+    this.logger.log('Updating post with id : '+id)
+
+    return this.postModel.findByIdAndUpdate(id, updatePostDto).exec()
+  }
+
+  remove(id: String) {
+
+    this.checkPostExistance(id)
+
+    this.logger.log('Deletig a post with id : '+id)
+
+    return this.postModel.findByIdAndRemove(id)
   }
 }
