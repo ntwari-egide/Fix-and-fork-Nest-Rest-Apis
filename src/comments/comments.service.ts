@@ -1,26 +1,84 @@
-import { Injectable } from '@nestjs/common';
+/**
+ * @author: ntwari egide
+ * @description: Comments service implementation
+ */
+
+
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { CommentNotFoundException } from 'src/exceptions/CommentNotFoundException';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
+
+  constructor(  
+    @Inject('COMMENT_MODEL')
+    private commentModal: Model<Comment>
+  ){}
+
+  private readonly logger = new Logger(CommentsService.name)
+
+
+  async create(createCommentDto: CreateCommentDto) : Promise<Comment> {
+
+    let newComment = new this.commentModal(createCommentDto)
+
+    return newComment.save()
+
   }
 
-  findAll() {
-    return `This action returns all comments`;
+  async findAll(): Promise<Comment[]> {
+
+    this.logger.log('Getting List of all comments')
+
+    return this.commentModal.find().exec()
+  
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+  checkCommentExistance = (id: String) : Comment => {
+    let comment : any
+    try {
+      comment = this.commentModal.findById(id).exec()
+
+      this.logger.log('Getting user with id : '+id)
+      
+    } catch (error) {
+
+      this.logger.log('Getting user with id: '+id+" has failed")
+
+      throw new CommentNotFoundException('User with id '+id+ ' is not found')
+
+    }
+
+    return comment
+
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  async findOne(id: String): Promise<Comment> {
+
+    return this.checkCommentExistance(id)
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async update(id: String, updateCommentDto: UpdateCommentDto): Promise<Comment> {
+
+    this.checkCommentExistance(id)
+    
+    this.logger.log('Updating a comment with id : '+id)
+
+    return this.commentModal.findByIdAndUpdate(id, updateCommentDto)
+
+  }
+
+  remove(id: String) {
+
+    this.checkCommentExistance(id)
+
+    this.logger.log('Deleting comment with id : '+id)
+
+    return  this.commentModal.findByIdAndRemove(id).exec()
+    
   }
 }
