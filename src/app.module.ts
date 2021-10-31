@@ -10,9 +10,10 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { PostTypeModule } from './post-type/post-type.module';
 import { PostsModule } from './posts/posts.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
-  imports: [ UserModule,DatabaseModule, PostTypeModule, PostsModule],
+  imports: [ UserModule,DatabaseModule, PostTypeModule, PostsModule, CommentsModule],
   controllers: [AppController],
   providers: [AppService],
 })
