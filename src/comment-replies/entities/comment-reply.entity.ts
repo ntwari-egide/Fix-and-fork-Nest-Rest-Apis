@@ -4,7 +4,7 @@
  */
  import * as mongoose from 'mongoose';
 
-export const CommentReply = new  mongoose.Schema({
+export const CommentReplySchema = new  mongoose.Schema({
 
     id: String,
 

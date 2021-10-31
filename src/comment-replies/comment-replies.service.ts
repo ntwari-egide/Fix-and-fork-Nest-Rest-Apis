@@ -1,26 +1,88 @@
-import { Injectable } from '@nestjs/common';
+/**
+ * @author: ntwari egide
+ * @description: Comment replies service implementation
+ */
+
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { CommentReplyNotFoundException } from 'src/exceptions/CommentReplyNotFoundException';
+import { CommentReply } from './comment-replies.interface';
 import { CreateCommentReplyDto } from './dto/create-comment-reply.dto';
 import { UpdateCommentReplyDto } from './dto/update-comment-reply.dto';
 
 @Injectable()
 export class CommentRepliesService {
-  create(createCommentReplyDto: CreateCommentReplyDto) {
-    return 'This action adds a new commentReply';
+
+  constructor(  
+    @Inject('USER_MODEL')
+    private commentRepliesModal: Model<CommentReply>
+  ){}
+
+  private readonly logger = new Logger(CommentRepliesService.name)
+
+  async create(createCommentReplyDto: CreateCommentReplyDto): Promise<CommentReply> {
+    
+    let commentReply = new this.commentRepliesModal(createCommentReplyDto)
+
+    this.logger.log('Saving new comment reply in database')
+
+    return commentReply.save()
+
   }
 
-  findAll() {
-    return `This action returns all commentReplies`;
+  async findAll() : Promise<CommentReply[]> {
+    
+    this.logger.log('Getting list of all comment replies')
+
+    return this.commentRepliesModal.find().exec()
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} commentReply`;
+  checkCommentReplyExistance = (id: String) : CommentReply => {
+
+    let reply : any
+    
+    try {
+    
+      reply = this.commentRepliesModal.findById(id).exec()
+
+      this.logger.log('Getting comment reply with id : '+id)
+      
+    } catch (error) {
+
+      this.logger.log('Getting comment reply with id: '+id+" has failed")
+
+      throw new CommentReplyNotFoundException('Comment reply with id '+id+ ' is not found')
+
+    }
+
+    return reply
   }
 
-  update(id: number, updateCommentReplyDto: UpdateCommentReplyDto) {
-    return `This action updates a #${id} commentReply`;
+  async findOne(id: String): Promise<CommentReply> {
+
+    return this.checkCommentReplyExistance(id)
+  
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} commentReply`;
+
+  async update(id: String, updateCommentReplyDto: UpdateCommentReplyDto) : Promise<CommentReply> {
+
+    this.checkCommentReplyExistance(id)
+
+    this.logger.log('Updating comment reply with id : '+id)
+
+    return this.commentRepliesModal.findByIdAndUpdate(id)
+
+  }
+
+  async remove(id: String) {
+
+    this.checkCommentReplyExistance(id)
+
+    this.logger.log('Deleting comment replies with id : '+id)
+
+    return this.commentRepliesModal.findByIdAndRemove(id)
+
   }
 }
