@@ -9,7 +9,7 @@ import { ApiProperty } from "@nestjs/swagger"
 export class CreatePostTypeDto {
 
     @ApiProperty({
-        default: "post-name",
+        // default: "post-name",
         description: "Post type name",
         type: String
     })
@@ -17,7 +17,7 @@ export class CreatePostTypeDto {
 
     
     @ApiProperty({
-        default: "http:iconimage/example",
+        // default: "http:iconimage/example",
         description: "Post type icon image url",
         type: String
     })
@@ -25,7 +25,7 @@ export class CreatePostTypeDto {
 
     
     @ApiProperty({
-        default: Date,
+        // default: Date,
         description: "Post type creation date",
         type: Date
     })
@@ -33,7 +33,7 @@ export class CreatePostTypeDto {
 
     
     @ApiProperty({
-        default: Date,
+        // default: Date,
         description: "Last updates are mode on",
         type: Date
     })

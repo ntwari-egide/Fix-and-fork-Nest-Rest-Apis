@@ -14,7 +14,7 @@ import { CommentsModule } from './comments/comments.module';
 import { CommentRepliesModule } from './comment-replies/comment-replies.module';
 
 @Module({
-  imports: [ UserModule,DatabaseModule, PostTypeModule, PostsModule, CommentsModule, CommentRepliesModule],
+  imports: [ UserModule,PostTypeModule,PostsModule,CommentsModule, CommentRepliesModule,DatabaseModule],
   controllers: [AppController],
   providers: [AppService],
 })

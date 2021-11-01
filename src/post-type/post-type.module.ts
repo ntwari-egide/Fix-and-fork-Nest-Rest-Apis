@@ -1,7 +1,3 @@
-/**
- * @author: ntwari egide
- * @description: Post type module implementation
- */
 
 
 import { Module } from '@nestjs/common';
