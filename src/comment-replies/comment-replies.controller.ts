@@ -3,7 +3,7 @@ import { CommentRepliesService } from './comment-replies.service';
 import { CreateCommentReplyDto } from './dto/create-comment-reply.dto';
 import { UpdateCommentReplyDto } from './dto/update-comment-reply.dto';
 
-@Controller('comment-replies')
+@Controller('api/v1/comment-replies')
 export class CommentRepliesController {
   constructor(private readonly commentRepliesService: CommentRepliesService) {}
 
@@ -19,16 +19,16 @@ export class CommentRepliesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.commentRepliesService.findOne(+id);
+    return this.commentRepliesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCommentReplyDto: UpdateCommentReplyDto) {
-    return this.commentRepliesService.update(+id, updateCommentReplyDto);
+    return this.commentRepliesService.update(id, updateCommentReplyDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.commentRepliesService.remove(+id);
+    return this.commentRepliesService.remove(id);
   }
 }

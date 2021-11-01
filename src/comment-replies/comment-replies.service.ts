@@ -14,7 +14,7 @@ import { UpdateCommentReplyDto } from './dto/update-comment-reply.dto';
 export class CommentRepliesService {
 
   constructor(  
-    @Inject('USER_MODEL')
+    @Inject('COMMENT_REPLY_MODEL')
     private commentRepliesModal: Model<CommentReply>
   ){}
 

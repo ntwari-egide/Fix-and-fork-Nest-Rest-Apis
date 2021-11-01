@@ -11,11 +11,10 @@ import { UserModule } from './user/user.module';
 import { PostTypeModule } from './post-type/post-type.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
-import { RepliesModule } from './-replies/-replies.module';
 import { CommentRepliesModule } from './comment-replies/comment-replies.module';
 
 @Module({
-  imports: [ UserModule,DatabaseModule, PostTypeModule, PostsModule, CommentsModule, RepliesModule, CommentRepliesModule],
+  imports: [ UserModule,DatabaseModule, PostTypeModule, PostsModule, CommentsModule, CommentRepliesModule],
   controllers: [AppController],
   providers: [AppService],
 })
