@@ -9,7 +9,7 @@ import { CommentReplySchema } from "./entities/comment-reply.entity";
   export const commentRepliesProvider = [
      {
        provide: 'COMMENT_REPLY_MODEL',
-       useFactory: (connection: Connection) => connection.model('User', CommentReplySchema),
+       useFactory: (connection: Connection) => connection.model('CommentReplies', CommentReplySchema),
        inject: ['DATABASE_CONNECTION'],
      },
    ];
