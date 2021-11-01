@@ -24,6 +24,15 @@ export class PostsService {
     return createPost.save();
   }
 
+
+  async findByPostId(postTypeId: String): Promise<Post[]> {
+
+      return this.postModel.find({
+        postTypes: postTypeId
+      }).exec()
+
+  }
+
   async findAll(): Promise<Post[]> {
 
     this.logger.log('Getting list of all posts')
