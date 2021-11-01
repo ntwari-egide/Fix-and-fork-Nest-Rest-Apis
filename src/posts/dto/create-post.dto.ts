@@ -63,7 +63,7 @@ export class CreatePostDto {
 
     @ApiProperty({
         description: "Posted by string",
-        type: Number
+        type:  String
     })
     PostedBy: String
 

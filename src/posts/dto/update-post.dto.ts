@@ -64,7 +64,7 @@ export class UpdatePostDto extends PartialType(CreatePostDto) {
 
     @ApiProperty({
         description: "Posted by string",
-        type: Number
+        type: String
     })
     PostedBy: String
 
