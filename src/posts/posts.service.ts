@@ -24,6 +24,12 @@ export class PostsService {
     return createPost.save();
   }
 
+  async getbycontentmdname(contentmdname: String): Promise<Post[]>{
+    return this.postModel.find({
+      contentMdFileUrl:contentmdname
+    }).exec()
+  }
+
 
   async findByPostId(postTypeId: String): Promise<Post[]> {
 

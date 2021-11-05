@@ -12,6 +12,13 @@ export class PostsController {
     return this.postsService.create(createPostDto);
   }
 
+  @Get("/contentmdfileurl/:contentmdname")
+  findByContentMd( @Param('contentmdname') contentmdname: String ) {
+
+    return this.postsService.getbycontentmdname(contentmdname)
+
+  }
+
   @Get()
   findAll() {
     return this.postsService.findAll();
