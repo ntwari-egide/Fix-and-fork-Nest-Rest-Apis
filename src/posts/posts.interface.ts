@@ -20,11 +20,11 @@
 
     githubLinkUrl: String,
 
-    totalForks: Number,
+    totalForks: number,
 
-    totalLikes: Number,
+    totalLikes: number,
 
-    totalViews: Number,
+    totalViews: number,
 
     PostedBy: String,
 
@@ -33,3 +33,12 @@
     updatedAt: Date
     
  }
+
+
+ export class PostDetails {
+
+   postDetails: Post
+
+   comments: [Comment]
+   
+}

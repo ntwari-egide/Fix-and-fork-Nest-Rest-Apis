@@ -48,19 +48,19 @@ export class UpdatePostDto extends PartialType(CreatePostDto) {
         description: "Number of forks",
         type: Number
     })
-    totalForks: Number
+    totalForks: number
 
     @ApiProperty({
         description: "Number of likes",
         type: Number
     })
-    totalLikes: Number
+    totalLikes: number
 
     @ApiProperty({
         description: "Number of views",
         type: Number
     })
-    totalViews: Number
+    totalViews: number
 
     @ApiProperty({
         description: "Posted by string",

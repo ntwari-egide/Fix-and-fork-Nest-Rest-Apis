@@ -1,16 +1,24 @@
+/**
+ * @author: ntwari egide
+ * @description: Post service implementation service
+ */
+
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { PostNotFoundException } from 'src/exceptions/PostNotFoundException';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Post } from './posts.interface';
+import { Post, PostDetails } from './posts.interface';
 
 @Injectable()
 export class PostsService {
 
   constructor(  
     @Inject('POST_MODEL')
-    private postModel: Model<Post>
+    private postModel: Model<Post>,
+
+    @Inject("COMMENT_MODEL")
+    private commentModel: Model<Comment>
   ){}
 
   private readonly logger = new Logger(PostsService.name)
@@ -24,10 +32,50 @@ export class PostsService {
     return createPost.save();
   }
 
-  async getbycontentmdname(contentmdname: String): Promise<Post[]>{
-    return this.postModel.find({
+  async likingPostAction(postId: String) : Promise<Post>{
+
+    let foundPost = this.postModel.findById(postId).exec()
+
+    ;(await foundPost).totalLikes = (await foundPost).totalLikes + 1;
+
+    return this.postModel.findByIdAndUpdate(postId, foundPost)
+  
+  }
+
+  async viewingPostAction(postId: String) : Promise<Post>{
+
+    let foundPost = this.postModel.findById(postId).exec()
+
+    ;(await foundPost).totalViews = (await foundPost).totalViews + 1;
+
+    return this.postModel.findByIdAndUpdate(postId, foundPost)
+  
+  }
+
+
+  async getbycontentmdname(contentmdname: String): Promise<PostDetails>{
+    
+    let foundPosts = this.postModel.find({
       contentMdFileUrl:contentmdname
     }).exec()
+
+
+    let postDetails = new PostDetails()
+
+    postDetails.postDetails  = foundPosts[0] 
+
+    // checking related comments in the database
+
+    let comments = this.commentModel
+      .find({  postId : foundPosts[0]._id })
+      .exec()
+
+    // adding found comments in the post details
+
+    // postDetails.comments = comments
+
+    return postDetails
+
   }
 
 
@@ -47,6 +95,12 @@ export class PostsService {
   
   }
 
+  /**
+   * Checks the existance of the post in the database
+   * @param id 
+   * @returns Post type
+   */
+
   checkPostExistance = (id: String) : Post => {
     let post : any
     try {
@@ -65,11 +119,23 @@ export class PostsService {
     return post
   }
 
+  /**
+   * @description: finding the post by id by checking the existance in the database
+   * @param id 
+   * @returns Post
+   */
 
   async findOne(id: String): Promise<Post> {
     return this.checkPostExistance(id)
   }
 
+
+  /**
+   * @description: updating the existing post using its id
+   * @param id 
+   * @param updatePostDto 
+   * @returns Updated post
+   */
   async update(id: String, updatePostDto: UpdatePostDto): Promise<Post> {
 
     this.checkPostExistance(id)
