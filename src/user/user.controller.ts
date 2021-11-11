@@ -1,3 +1,8 @@
+/**
+ * @author: ntwari egide
+ * @description: user controller endpoints handler
+ */
+
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';

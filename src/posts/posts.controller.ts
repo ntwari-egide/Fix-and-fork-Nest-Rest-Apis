@@ -1,3 +1,9 @@
+/**
+ * @author: ntwari egide
+ * @description: posts controller endpoints handler
+ */
+
+
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -17,6 +23,17 @@ export class PostsController {
 
     return this.postsService.getbycontentmdname(contentmdname)
 
+  }
+
+  @Get("/add-new-like/:postId")
+  addNewLikeActionHandler ( @Param('postId') postId: String) {
+    return this.postsService.likingPostAction(postId)
+  }
+
+  
+  @Get("/add-new-view/:postId")
+  addViewLikeActionHandler ( @Param('postId') postId: String) {
+    return this.postsService.viewingPostAction(postId)
   }
 
   @Get()

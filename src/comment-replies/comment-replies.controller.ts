@@ -1,3 +1,8 @@
+/**
+ * @author: ntwari egide
+ * @description: comment replies controller endpoints handler
+ */
+
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CommentRepliesService } from './comment-replies.service';
 import { CreateCommentReplyDto } from './dto/create-comment-reply.dto';

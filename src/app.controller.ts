@@ -1,3 +1,8 @@
+/**
+ * @author: ntwari egide
+ * @description: app main controller end points handler
+ */
+
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
