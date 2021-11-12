@@ -15,10 +15,7 @@ export class PostsService {
 
   constructor(  
     @Inject('POST_MODEL')
-    private postModel: Model<Post>,
-
-    @Inject("COMMENT_MODEL")
-    private commentModel: Model<Comment>
+    private postModel: Model<Post>
   ){}
 
   private readonly logger = new Logger(PostsService.name)
@@ -53,28 +50,13 @@ export class PostsService {
   }
 
 
-  async getbycontentmdname(contentmdname: String): Promise<PostDetails>{
+  async getbycontentmdname(contentmdname: String): Promise<Post[]>{
     
     let foundPosts = this.postModel.find({
       contentMdFileUrl:contentmdname
     }).exec()
 
-
-    let postDetails = new PostDetails()
-
-    postDetails.postDetails  = foundPosts[0] 
-
-    // checking related comments in the database
-
-    let comments = this.commentModel
-      .find({  postId : foundPosts[0]._id })
-      .exec()
-
-    // adding found comments in the post details
-
-    // postDetails.comments = comments
-
-    return postDetails
+    return foundPosts
 
   }
 
