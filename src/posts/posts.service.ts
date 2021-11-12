@@ -31,21 +31,25 @@ export class PostsService {
 
   async likingPostAction(postId: String) : Promise<Post>{
 
-    let foundPost = this.postModel.findById(postId).exec()
+    let foundPost = await this.postModel.findById(postId).exec()
 
-    ;(await foundPost).totalLikes = (await foundPost).totalLikes + 1;
+    let updates = {
+      totalLikes: foundPost.totalLikes  + 1
+    }
 
-    return this.postModel.findByIdAndUpdate(postId, foundPost)
+    return this.postModel.findOneAndUpdate(postId, updates)
   
   }
 
   async viewingPostAction(postId: String) : Promise<Post>{
 
-    let foundPost = this.postModel.findById(postId).exec()
+    let foundPost = await this.postModel.findById(postId).exec()
 
-    ;(await foundPost).totalViews = (await foundPost).totalViews + 1;
+    let updates = {
+      totalViews: foundPost.totalViews  + 1
+    }
 
-    return this.postModel.findByIdAndUpdate(postId, foundPost)
+    return this.postModel.findOneAndUpdate(postId, updates)
   
   }
 
