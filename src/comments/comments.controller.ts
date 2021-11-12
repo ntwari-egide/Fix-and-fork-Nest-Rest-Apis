@@ -3,7 +3,7 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
-@Controller('comments')
+@Controller('/api/v1/comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
@@ -20,6 +20,13 @@ export class CommentsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.commentsService.findOne(id);
+  }
+
+  @Get('/post-id/:postId')
+  findByPostId(@Param('postId') postId: String) {
+
+    return this.commentsService.getCommentsByPost(postId)
+
   }
 
   @Patch(':id')

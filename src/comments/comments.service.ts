@@ -42,6 +42,12 @@ export class CommentsService {
 
   }
 
+  async getCommentsByPost(postId: String): Promise<Comment[]> {
+
+    return await this.commentModal.find({ postId: postId}).exec()
+
+  }
+
   async findAll(): Promise<Comment[]> {
 
     this.logger.log('Getting List of all comments')
