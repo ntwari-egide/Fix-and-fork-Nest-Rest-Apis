@@ -3,6 +3,7 @@
  * @description: Comment modal implementation
  */
  import * as mongoose from 'mongoose';
+import { UserSchema } from '../../user/entities/user.entity';
 
 export const CommentSchema = new mongoose.Schema ({
 
@@ -16,6 +17,6 @@ export const CommentSchema = new mongoose.Schema ({
 
     commentedAt: Date,
 
-    commentedBy: String
+    commentedBy: [UserSchema]
 
 })

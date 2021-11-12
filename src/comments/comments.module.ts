@@ -10,6 +10,7 @@ import { CommentsController } from './comments.controller';
 import { DatabaseModule } from 'src/database/database.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { commentsProvider } from './comments.provider';
+import { usersProvider } from 'src/user/user.provider';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { commentsProvider } from './comments.provider';
   controllers: [CommentsController],
   providers: [
     CommentsService,
-    ...commentsProvider
+    ...commentsProvider,
+    ...usersProvider
   ]
 })
 export class CommentsModule {}

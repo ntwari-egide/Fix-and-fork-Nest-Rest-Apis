@@ -7,6 +7,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { CommentNotFoundException } from 'src/exceptions/CommentNotFoundException';
+import { User } from 'src/user/user.interface';
+import { Comment } from './comments.interface';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
@@ -15,7 +17,10 @@ export class CommentsService {
 
   constructor(  
     @Inject('COMMENT_MODEL')
-    private commentModal: Model<Comment>
+    private commentModal: Model<Comment>,
+
+    @Inject("USER_MODEL")
+    private userModal: Model<User>
   ){}
 
   private readonly logger = new Logger(CommentsService.name)
@@ -24,6 +29,14 @@ export class CommentsService {
   async create(createCommentDto: CreateCommentDto) : Promise<Comment> {
 
     let newComment = new this.commentModal(createCommentDto)
+
+
+    let commentedBy = await this.userModal.findById(createCommentDto.commentedBy)
+    .exec()
+
+    newComment.commentedBy = commentedBy
+
+    console.log('Data: ',newComment)
 
     return newComment.save()
 
