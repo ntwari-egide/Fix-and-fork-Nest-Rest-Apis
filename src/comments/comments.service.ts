@@ -36,8 +36,6 @@ export class CommentsService {
 
     newComment.commentedBy = commentedBy
 
-    console.log('Data: ',newComment)
-
     return newComment.save()
 
   }
