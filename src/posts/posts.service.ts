@@ -83,21 +83,21 @@ export class PostsService {
 
   async searchPostByKeyword (searchKeyWord: String) : Promise<Post[]> {
 
-    let postsFound = this.postModel.find(
+    let postsFound = await this.postModel.find(
       {
         $or: [
           {
-            postTitle: searchKeyWord
+            postTitle: new RegExp(<string> searchKeyWord, "ig")
           },
           {
-            postDescription: searchKeyWord
+            postDescription: new RegExp(<string> searchKeyWord, "ig")
           },
           {
-            contentMdFileUrl: searchKeyWord
+            contentMdFileUrl: new RegExp(<string> searchKeyWord, "ig")
           }
         ]
       }
-    )
+    ).exec()
     
 
     return postsFound

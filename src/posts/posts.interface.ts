@@ -14,7 +14,7 @@
 
     postTitle: String,
 
-    postDescription: String,
+    postDescription: String | RegExp,
 
     contentMdFileUrl: String,
 
