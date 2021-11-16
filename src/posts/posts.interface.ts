@@ -12,11 +12,11 @@
 
     coverImageUrl: String,
 
-    postTitle: String,
+    postTitle: String| RegExp,
 
     postDescription: String | RegExp,
 
-    contentMdFileUrl: String,
+    contentMdFileUrl: String| RegExp,
 
     githubLinkUrl: String,
 
