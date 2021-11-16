@@ -25,6 +25,19 @@ export class PostsController {
 
   }
 
+  /**
+   * 
+   * @param searchkeyword 
+   * @returns post []
+   */
+
+  @Get('/search/:searchkeyword')
+  search( @Param('searchkeyword') searchkeyword: String ) {
+
+    return this.postsService.searchPostByKeyword(searchkeyword)
+
+  }
+
   @Get("/add-new-like/:postId")
   addNewLikeActionHandler ( @Param('postId') postId: String) {
     return this.postsService.likingPostAction(postId)

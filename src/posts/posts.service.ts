@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { PostNotFoundException } from 'src/exceptions/PostNotFoundException';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Post, PostDetails } from './posts.interface';
+import { Post } from './posts.interface';
 
 @Injectable()
 export class PostsService {
@@ -79,6 +79,29 @@ export class PostsService {
 
     return this.postModel.find().exec()
   
+  }
+
+  async searchPostByKeyword (searchKeyWord: String) : Promise<Post[]> {
+
+    let postsFound = this.postModel.find(
+      {
+        $or: [
+          {
+            postTitle: searchKeyWord
+          },
+          {
+            postDescription: searchKeyWord
+          },
+          {
+            contentMdFileUrl: searchKeyWord
+          }
+        ]
+      }
+    )
+    
+
+    return postsFound
+
   }
 
   /**
